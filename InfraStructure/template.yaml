@@ -57,3 +57,12 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: s3.amazonaws.com
       SourceArn: !GetAtt DataBucket.Arn
+Outputs:
+
+  DataBucketName:
+    Description: S3 bucket used by the supplier ingestion pipeline
+    Value: !Ref DataBucket
+
+  ProcessingLambdaName:
+    Description: Supplier ingestion Lambda function
+    Value: !Ref ProcessingLambda

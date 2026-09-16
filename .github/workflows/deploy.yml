@@ -1,0 +1,22 @@
+name: Deploy Supplier Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to AWS DEV
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package Lambda
+        working-directory: Lambda
+        run: zip ../lambda.zip handler.py
+
+      - name: Verify Lambda package
+        run: unzip -l lambda.zip
