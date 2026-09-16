@@ -1,21 +1,15 @@
+# Local AWS configuration
+InfraStructure/github-trust-policy.json
+
+# Generated files
+lambda.zip
+response.json
+
 # Python
 __pycache__/
 *.pyc
 
-# Lambda deployment package
-lambda.zip
-
-# Lambda test response
-response.json
-
-# Environment/secrets
+# Secrets and private keys
 .env
 *.pem
 *.key
-
-# VS Code local settings
-.vscode/
-
-# OS
-.DS_Store
-Thumbs.db
