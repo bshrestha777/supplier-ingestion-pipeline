@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   deploy:
     name: Deploy to AWS DEV
@@ -18,5 +22,32 @@ jobs:
         working-directory: Lambda
         run: zip ../lambda.zip handler.py
 
-      - name: Verify Lambda package
-        run: unzip -l lambda.zip
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Get deployment bucket
+        run: |
+          BUCKET_NAME=$(aws cloudformation describe-stacks \
+            --stack-name supplier-ingestion-dev \
+            --query "Stacks[0].Outputs[?OutputKey=='DataBucketName'].OutputValue" \
+            --output text)
+
+          echo "BUCKET_NAME=$BUCKET_NAME" >> "$GITHUB_ENV"
+
+      - name: Upload Lambda package
+        run: |
+          aws s3 cp lambda.zip \
+            "s3://$BUCKET_NAME/deployment/lambda.zip"
+
+      - name: Update Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name supplier-ingestion-processor-dev \
+            --s3-bucket "$BUCKET_NAME" \
+            --s3-key deployment/lambda.zip
