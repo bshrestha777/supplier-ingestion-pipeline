@@ -6,7 +6,7 @@ import urllib.parse
 s3 = boto3.client("s3")
 
 
-def lambda_handler(event, context)
+def lambda_handler(event, context):
 
     print("Supplier ingestion Lambda started")
 
