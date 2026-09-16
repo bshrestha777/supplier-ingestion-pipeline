@@ -1,0 +1,4 @@
+order_id,customer_id,product,quantity,price
+1001,C101,Fries,10,25.50
+1002,C102,Potatoes,20,40.00
+1003,C103,Fries,15,30.00

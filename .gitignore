@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# Lambda deployment package
+lambda.zip
+
+# Lambda test response
+response.json
+
+# Environment/secrets
+.env
+*.pem
+*.key
+
+# VS Code local settings
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
