@@ -8,7 +8,7 @@ s3 = boto3.client("s3")
 
 def lambda_handler(event, context):
 
-    print("Lambda started")
+    print("Supplier ingestion Lambda started")
 
     # Get bucket and file name from the S3 event
     bucket = event["Records"][0]["s3"]["bucket"]["name"]
@@ -17,8 +17,7 @@ def lambda_handler(event, context):
         event["Records"][0]["s3"]["object"]["key"]
     )
 
-    print(f"Bucket: {bucket}")
-    print(f"File: {key}")
+    print(f"Processing file: s3://{bucket}/{key}")
 
     # Read the file from S3
     response = s3.get_object(
